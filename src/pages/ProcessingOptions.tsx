@@ -10,6 +10,12 @@ const ProcessingOptions = () => {
   const navigate = useNavigate();
   const [selectedOption, setSelectedOption] = useState("auto-draft");
 
+  const handleProcessRFP = () => {
+    // Store selected processing option for the draft response page
+    sessionStorage.setItem('processingOption', selectedOption);
+    navigate("/draft-response");
+  };
+
   const processingOptions = [
     {
       id: "auto-draft",
@@ -91,7 +97,7 @@ const ProcessingOptions = () => {
 
       <div className="flex justify-center pt-4">
         <Button
-          onClick={() => navigate("/draft-response")}
+          onClick={handleProcessRFP}
           size="lg"
           className="px-12"
         >

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -6,6 +6,34 @@ import { Upload, FileStack, CheckCircle } from "lucide-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleFileUpload = (files: FileList | null) => {
+    if (files && files.length > 0) {
+      // Store file info in sessionStorage for demo purposes
+      const file = files[0];
+      sessionStorage.setItem('uploadedFile', JSON.stringify({
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }));
+      navigate("/upload");
+    }
+  };
+
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    const files = e.dataTransfer.files;
+    handleFileUpload(files);
+  };
 
   return (
     <div className="space-y-8">
@@ -24,52 +52,55 @@ const Dashboard = () => {
         </CardContent>
       </Card>
 
-      {/* Main Upload Area */}
-      <div className="flex justify-center">
-        <Card className="w-full max-w-2xl">
-          <CardContent className="p-12 text-center">
-            <div className="space-y-6">
-              <div className="flex justify-center">
-                <div className="flex items-center justify-center w-20 h-20 bg-primary-light rounded-full">
-                  <Upload className="h-10 w-10 text-primary" />
-                </div>
-              </div>
-              
-              <div className="space-y-2">
-                <h2 className="text-2xl font-semibold text-foreground">
-                  Upload New RFP
-                </h2>
-                <p className="text-muted-foreground">
-                  AI will use your existing knowledge base to generate responses instantly.
-                </p>
-              </div>
-
-              {/* Drag & Drop Area */}
-              <div className="border-2 border-dashed border-border bg-muted/30 rounded-lg p-8 hover:border-primary/50 transition-colors cursor-pointer">
-                <div className="space-y-3">
-                  <Upload className="h-8 w-8 text-muted-foreground mx-auto" />
-                  <div className="space-y-1">
-                    <p className="text-sm font-medium text-foreground">
-                      Drag and drop your RFP files here
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      or click to browse files
-                    </p>
+        {/* Main Upload Card */}
+        <Card className="max-w-2xl mx-auto">
+          <CardContent className="p-12">
+            <div 
+              className="border-2 border-dashed border-border bg-muted/30 rounded-lg p-16 text-center hover:border-primary/30 transition-colors cursor-pointer"
+              onDragOver={handleDragOver}
+              onDrop={handleDrop}
+              onClick={handleButtonClick}
+            >
+              <div className="space-y-6">
+                <div className="flex justify-center">
+                  <div className="flex items-center justify-center w-20 h-20 bg-primary/10 rounded-full">
+                    <Upload className="h-10 w-10 text-primary" />
                   </div>
                 </div>
+                
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-semibold text-foreground">
+                    Upload New RFP
+                  </h2>
+                  <p className="text-muted-foreground max-w-md mx-auto">
+                    AI will use your existing knowledge base to generate responses instantly.
+                  </p>
+                  
+                  <Button 
+                    onClick={handleButtonClick}
+                    size="lg" 
+                    className="px-8"
+                  >
+                    Choose File to Upload
+                  </Button>
+                  
+                  <p className="text-sm text-muted-foreground">
+                    or drag and drop your RFP document here
+                  </p>
+                </div>
               </div>
-
-              <Button 
-                onClick={() => navigate("/upload")}
-                className="w-full"
-                size="lg"
-              >
-                Upload New RFP
-              </Button>
             </div>
+            
+            {/* Hidden file input */}
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={(e) => handleFileUpload(e.target.files)}
+              className="hidden"
+            />
           </CardContent>
         </Card>
-      </div>
     </div>
   );
 };

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { 
   Download, 
   Mail, 
@@ -12,15 +13,55 @@ import {
   Users, 
   Calendar
 } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const Output = () => {
   const navigate = useNavigate();
+  const { toast } = useToast();
+  const [emailRecipient, setEmailRecipient] = useState("");
+
+  const handleDownload = (format: 'word' | 'pdf') => {
+    // Create a blob with sample content for demo
+    const content = "RFP Response - Digital Banking Modernization Initiative\n\nThis is a sample RFP response document...";
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `RFP_Response.${format === 'word' ? 'docx' : 'pdf'}`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    
+    toast({
+      title: "Download Started",
+      description: `Your RFP response is being downloaded as ${format.toUpperCase()}.`,
+    });
+  };
+
+  const handleSendEmail = () => {
+    if (!emailRecipient.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter a recipient email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    // In a real app, this would send the email
+    toast({
+      title: "Email Sent",
+      description: `RFP response has been sent to ${emailRecipient}`,
+    });
+    setEmailRecipient("");
+  };
 
   return (
     <div className="max-w-4xl mx-auto space-y-8">
       <div className="text-center space-y-4">
         <div className="flex justify-center">
-          <div className="flex items-center justify-center w-16 h-16 bg-success-light rounded-full">
+          <div className="flex items-center justify-center w-16 h-16 bg-success/10 rounded-full">
             <CheckCircle className="h-8 w-8 text-success" />
           </div>
         </div>
@@ -76,20 +117,22 @@ const Output = () => {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button variant="outline" size="lg" className="h-16 flex-col gap-2">
+            <Button 
+              size="lg" 
+              className="flex items-center gap-2"
+              onClick={() => handleDownload('word')}
+            >
               <Download className="h-5 w-5" />
-              <div className="text-center">
-                <div className="font-medium">Download as Word</div>
-                <div className="text-xs text-muted-foreground">Editable DOCX format</div>
-              </div>
+              Download as Word
             </Button>
-            
-            <Button variant="outline" size="lg" className="h-16 flex-col gap-2">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="flex items-center gap-2"
+              onClick={() => handleDownload('pdf')}
+            >
               <Download className="h-5 w-5" />
-              <div className="text-center">
-                <div className="font-medium">Download as PDF</div>
-                <div className="text-xs text-muted-foreground">Print-ready format</div>
-              </div>
+              Download as PDF
             </Button>
           </div>
         </CardContent>
@@ -104,42 +147,39 @@ const Output = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2">
-            <label className="text-sm font-medium">Send to:</label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Select recipient or enter email" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="procurement@centralcity.gov">
-                  procurement@centralcity.gov (Primary Contact)
-                </SelectItem>
-                <SelectItem value="tech.review@centralcity.gov">
-                  tech.review@centralcity.gov (Technical Review)
-                </SelectItem>
-                <SelectItem value="legal@centralcity.gov">
-                  legal@centralcity.gov (Legal Review)
-                </SelectItem>
-              </SelectContent>
-            </Select>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Recipient Email</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="recipient@organization.com"
+                value={emailRecipient}
+                onChange={(e) => setEmailRecipient(e.target.value)}
+              />
+            </div>
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="w-full flex items-center gap-2"
+              onClick={handleSendEmail}
+            >
+              <Mail className="h-5 w-5" />
+              Send via Email
+            </Button>
           </div>
-          
-          <Button className="w-full" size="lg">
-            <Mail className="h-4 w-4 mr-2" />
-            Send Response
-          </Button>
         </CardContent>
       </Card>
 
       {/* Success Notice */}
-      <Card className="border-success/20 bg-success-light">
+      <Card className="border-success/20 bg-success/5">
         <CardContent className="flex items-center gap-3 p-6">
           <CheckCircle className="h-6 w-6 text-success flex-shrink-0" />
           <div className="space-y-1">
-            <p className="font-medium text-success-foreground">
+            <p className="font-medium text-foreground">
               Response Added to Knowledge Base
             </p>
-            <p className="text-sm text-success-foreground/80">
+            <p className="text-sm text-muted-foreground">
               This response has been automatically added to your knowledge base for future learning and improved RFP responses.
             </p>
           </div>
