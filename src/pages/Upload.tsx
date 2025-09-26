@@ -42,11 +42,11 @@ const Upload = () => {
           {/* Upload Progress */}
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Uploading...</span>
-              <span className="text-primary font-medium">75%</span>
+              <span className="text-muted-foreground">Upload Complete</span>
+              <span className="text-primary font-medium">100%</span>
             </div>
             <div className="w-full bg-muted rounded-full h-2">
-              <div className="bg-primary h-2 rounded-full transition-all duration-300" style={{ width: '75%' }}></div>
+              <div className="bg-primary h-2 rounded-full transition-all duration-300" style={{ width: '100%' }}></div>
             </div>
           </div>
         </CardContent>
