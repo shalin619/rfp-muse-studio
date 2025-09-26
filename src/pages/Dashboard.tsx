@@ -17,7 +17,7 @@ const Dashboard = () => {
           </div>
           <div className="flex items-center gap-2">
             <CheckCircle className="h-5 w-5 text-success" />
-            <span className="text-sm font-medium text-success-foreground">
+            <span className="text-sm font-medium text-foreground">
               Knowledge base of 2,500+ past RFPs already available.
             </span>
           </div>
