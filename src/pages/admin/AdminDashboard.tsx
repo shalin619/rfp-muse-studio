@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -14,12 +15,14 @@ import {
   Download,
   Eye,
   Edit,
-  Search
+  Search,
+  ArrowLeft
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import RFPReferenceModal from "@/components/RFPReferenceModal";
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [showRFPReference, setShowRFPReference] = useState(false);
@@ -101,8 +104,25 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30">
-      <div className="max-w-7xl mx-auto p-6 space-y-6">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-semibold text-foreground">Admin Dashboard</h1>
+        <div className="flex items-center gap-4">
+          <Button 
+            onClick={() => navigate("/")}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Home
+          </Button>
+          <Badge variant="secondary">Control & Oversight</Badge>
+        </div>
+      </div>
+
+      <div className="min-h-screen bg-muted/30">
+        <div className="max-w-7xl mx-auto p-6 space-y-6">
         {/* Knowledge Base Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card>
@@ -290,10 +310,11 @@ const AdminDashboard = () => {
           </CardContent>
         </Card>
 
-        <RFPReferenceModal
-          isOpen={showRFPReference}
-          onClose={() => setShowRFPReference(false)}
-        />
+          <RFPReferenceModal
+            isOpen={showRFPReference}
+            onClose={() => setShowRFPReference(false)}
+          />
+        </div>
       </div>
     </div>
   );

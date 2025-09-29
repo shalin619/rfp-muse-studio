@@ -7,7 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { 
   MessageSquare, 
-  ToggleLeft
+  ToggleLeft,
+  ArrowLeft
 } from "lucide-react";
 import RichTextEditor from "@/components/RichTextEditor";
 
@@ -150,9 +151,20 @@ This comprehensive digital banking solution represents a strategic investment in
         <h1 className="text-3xl font-semibold text-foreground">
           Review & Edit Response
         </h1>
-        <Button onClick={() => navigate("/user/output")} variant="outline">
-          Finalize Response
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button 
+            onClick={() => navigate("/")}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Home
+          </Button>
+          <Button onClick={() => navigate("/user/output")} variant="outline">
+            Finalize Response
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">

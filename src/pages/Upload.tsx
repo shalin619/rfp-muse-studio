@@ -4,13 +4,32 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Upload as UploadIcon, FileText, Calendar, Building, FileType } from "lucide-react";
+import { Upload as UploadIcon, FileText, Calendar, Building, FileType, ArrowLeft } from "lucide-react";
 
 const Upload = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-semibold text-foreground">Upload New RFP</h1>
+        <div className="flex items-center gap-4">
+          <Button 
+            onClick={() => navigate("/")}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Home
+          </Button>
+          <Button onClick={() => navigate("/user/processing-options")}>
+            Continue to Processing Options
+          </Button>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       {/* Left Side - Upload Area */}
       <Card>
         <CardHeader>
@@ -116,15 +135,16 @@ const Upload = () => {
             />
           </div>
 
-            <Button 
-              onClick={() => navigate("/user/processing-options")}
-              className="w-full"
-              size="lg"
-            >
+          <Button 
+            onClick={() => navigate("/user/processing-options")}
+            className="w-full"
+            size="lg"
+          >
             Proceed to Processing Options
           </Button>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };

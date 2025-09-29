@@ -11,7 +11,7 @@ import {
   AccordionItem, 
   AccordionTrigger 
 } from "@/components/ui/accordion";
-import { AlertTriangle, FileText, Users, Save } from "lucide-react";
+import { AlertTriangle, FileText, Users, Save, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor";
 
@@ -316,9 +316,20 @@ This comprehensive digital banking solution represents a strategic investment in
                             "Q&A Style Responses"}
           </p>
         </div>
-        <Button onClick={() => navigate("/user/review")} variant="outline">
-          Continue to Review
-        </Button>
+        <div className="flex items-center gap-4">
+          <Button 
+            onClick={() => navigate("/")}
+            variant="outline"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Home
+          </Button>
+          <Button onClick={() => navigate("/user/review")} variant="outline">
+            Continue to Review
+          </Button>
+        </div>
       </div>
 
       {processingOption === "auto-draft" && renderAutoDraftView()}
