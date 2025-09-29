@@ -11,7 +11,7 @@ import {
   AccordionItem, 
   AccordionTrigger 
 } from "@/components/ui/accordion";
-import { AlertTriangle, FileText, Users, Save, ArrowLeft } from "lucide-react";
+import { AlertTriangle, FileText, Users, Save, ArrowLeft, MessageSquare } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor";
 
@@ -144,22 +144,22 @@ This comprehensive digital banking solution represents a strategic investment in
             {
               id: "executive-summary",
               title: "Executive Summary",
-              content: "Our bank is pleased to submit this comprehensive proposal for the Digital Banking Modernization Initiative. With over 75 years of banking excellence and a proven track record in digital transformation, we are uniquely positioned to deliver innovative solutions."
+              content: "First National Bank is pleased to submit this comprehensive proposal for your Digital Banking Transformation Initiative. As a federally chartered institution with over 75 years of banking excellence and $2.5 billion in assets under management, we bring proven expertise in delivering secure, scalable financial technology solutions. Our proposal outlines a comprehensive digital banking platform that will position your institution at the forefront of financial innovation while maintaining the highest standards of security, compliance, and customer service."
             },
             {
               id: "compliance",
-              title: "Compliance & Certifications", 
-              content: "We maintain SOC 2 Type II compliance, PCI DSS Level 1 certification, and adhere to all federal banking regulations including BSA/AML requirements. Our institution is FDIC-insured with a strong regulatory track record."
+              title: "Security & Compliance Framework", 
+              content: "Our multi-layered security architecture includes AES-256 encryption at rest, TLS 1.3 for data in transit, multi-factor authentication with biometric verification, 24/7 SOC monitoring with AI-powered threat detection, and role-based access controls. We ensure full compliance with FFIEC IT Examination Handbook guidelines, PCI DSS Level 1 certification, GLBA privacy requirements, BSA/AML monitoring capabilities, and WCAG 2.1 AA accessibility standards. Our platform is ISO 27001 and SOC 2 Type II certified with continuous compliance monitoring."
             },
             {
               id: "technical-details",
-              title: "Technical Details",
-              content: "We propose a cloud-native architecture utilizing microservices and API-first design principles. Our solution leverages AWS infrastructure with multi-region deployment for maximum reliability and performance."
+              title: "Technical Approach & Architecture",
+              content: "We propose a modern, cloud-native architecture built on microservices principles using multi-region AWS deployment with automatic failover. Our solution features independently scalable services for account management, payments, and customer communications, RESTful and GraphQL APIs for seamless third-party integrations, event-driven architecture supporting instant transaction processing, and Progressive Web App (PWA) technology ensuring consistent cross-device experience. Core banking integration supports FIS, Fiserv, and Jack Henry platforms with minimal operational disruption."
             },
             {
               id: "pricing",
-              title: "Pricing Structure",
-              content: "Our competitive pricing model includes implementation costs, licensing fees, and ongoing support. We offer flexible payment terms and scalable pricing based on transaction volume and user count."
+              title: "Investment & Implementation Timeline",
+              content: "Our 4-phase implementation approach includes: Phase 1 (Months 1-2) - Discovery and planning with comprehensive requirements analysis; Phase 2 (Months 3-6) - Development and configuration with core platform customization; Phase 3 (Months 7-8) - Testing and training with security penetration testing; Phase 4 (Months 9-12) - Deployment and support with phased rollout. This strategic investment delivers projected ROI of 180% within three years through increased customer engagement, operational efficiency, and new revenue opportunities."
             }
           ]
         };
@@ -169,18 +169,23 @@ This comprehensive digital banking solution represents a strategic investment in
           qapairs: [
             {
               id: 1,
-              question: "What is your bank's experience with digital banking solutions?",
-              answer: "Our bank has over 75 years of banking experience with a proven track record in digital transformation. We have successfully implemented award-winning digital banking platforms and serve customers with assets exceeding $2.5 billion."
+              question: "Describe your institution's experience and qualifications in providing digital banking solutions, including years of operation, asset size, and relevant certifications.",
+              answer: "First National Bank brings 75+ years of continuous banking operations since our establishment in 1948, evolving from a community-focused institution to a regional banking leader with $2.5 billion in total assets under management. We serve over 150,000 customers across multiple states and maintain FDIC insurance with strong regulatory standing with the OCC and Federal Reserve. Our digital expertise includes ISO 27001 and SOC 2 Type II certifications, successful implementation of digital transformation projects for over 50 financial institutions, and an award-winning digital banking platform with 98.5% uptime. Our technology team has delivered mobile-first banking applications with biometric authentication, real-time payment processing systems, advanced fraud detection platforms, and regulatory reporting systems."
             },
             {
               id: 2,
-              question: "How do you ensure security and compliance in your solutions?",
-              answer: "We maintain comprehensive security frameworks including SOC 2 Type II compliance, PCI DSS Level 1 certification, end-to-end encryption, multi-factor authentication, and continuous security monitoring with regular penetration testing."
+              question: "Detail your security framework and compliance approach, including specific measures for data protection, regulatory adherence, and risk management.",
+              answer: "Our comprehensive multi-layered security architecture ensures the highest level of protection with AES-256 encryption at rest and TLS 1.3 for data in transit, multi-factor authentication with biometric verification options, Web Application Firewall (WAF) and DDoS protection, 24/7 Security Operations Center (SOC) with AI-powered threat detection, and role-based permissions following the principle of least privilege. We maintain full regulatory compliance with FFIEC IT Examination Handbook guidelines, PCI DSS Level 1 certification, GLBA privacy and safeguarding requirements, BSA/AML monitoring and reporting capabilities, and WCAG 2.1 AA accessibility standards. Our platform undergoes continuous compliance monitoring, regular penetration testing, and maintains comprehensive incident response procedures."
             },
             {
               id: 3,
-              question: "What is your proposed implementation timeline?",
-              answer: "We propose a 4-phase approach: Phase 1 (Months 1-3) - Requirements analysis, Phase 2 (Months 4-8) - Development and integration, Phase 3 (Months 9-12) - Testing and deployment, Phase 4 (Months 13-15) - Support and optimization."
+              question: "Provide a detailed technical approach including architecture design, integration capabilities, and scalability considerations for the proposed digital banking solution.",
+              answer: "We propose a modern, cloud-native architecture built on microservices principles to ensure scalability, reliability, and future adaptability. Our technical foundation includes multi-region AWS deployment with automatic failover capabilities, independently scalable microservices for account management, payments, and customer communications, RESTful and GraphQL APIs enabling seamless third-party integrations, event-driven architecture supporting instant transaction processing, and Progressive Web App (PWA) technology ensuring consistent cross-device experience. Our solution seamlessly integrates with existing core banking systems including FIS, Fiserv, and Jack Henry platforms, minimizing disruption to current operations while maximizing new functionality. The architecture supports real-time processing, advanced analytics, and can scale to accommodate future growth and evolving banking requirements."
+            },
+            {
+              id: 4,
+              question: "Outline your implementation methodology, timeline, project phases, and post-implementation support strategy.",
+              answer: "Our proven 4-phase implementation methodology minimizes risk and ensures smooth transition: Phase 1 (Months 1-2) includes comprehensive requirements analysis and system assessment, integration planning with existing core banking systems, security assessment and compliance gap analysis, and project team establishment with stakeholder alignment. Phase 2 (Months 3-6) covers core platform development and customization, API integration with existing banking systems, security implementation and testing, and user interface development with branding customization. Phase 3 (Months 7-8) involves comprehensive system testing including security penetration testing, user acceptance testing with key stakeholders, staff training programs for administrators and customer service teams, and regulatory review and approval processes. Phase 4 (Months 9-12) includes phased rollout to minimize operational disruption, customer migration and onboarding support, post-implementation monitoring and optimization, and ongoing support and maintenance services with 24/7 technical assistance."
             }
           ]
         };
@@ -229,25 +234,17 @@ This comprehensive digital banking solution represents a strategic investment in
           <TabsContent key={section.id} value={section.id} className="space-y-4">
             <Card>
               <CardHeader>
-                <div className="flex items-center justify-between">
-                  <CardTitle>{section.title}</CardTitle>
-                  <Button 
-                    onClick={() => handleSave(section.id, savedContent[section.id] || section.content)}
-                    variant="outline"
-                    size="sm"
-                    className="flex items-center gap-2"
-                  >
-                    <Save className="h-4 w-4" />
-                    Save
-                  </Button>
-                </div>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  {section.title}
+                </CardTitle>
               </CardHeader>
               <CardContent>
-                <Textarea
-                  value={savedContent[section.id] || section.content}
-                  onChange={(e) => setSavedContent(prev => ({ ...prev, [section.id]: e.target.value }))}
-                  className="min-h-[300px]"
-                  placeholder={`AI-generated content for ${section.title}...`}
+                <RichTextEditor
+                  value={savedContent[section.id] || `<h2>${section.title}</h2>\n\n<p>${section.content}</p>`}
+                  onChange={(value) => setSavedContent(prev => ({ ...prev, [section.id]: value }))}
+                  placeholder={`Edit content for ${section.title}...`}
+                  minHeight="400px"
                 />
               </CardContent>
             </Card>
@@ -265,34 +262,29 @@ This comprehensive digital banking solution represents a strategic investment in
         {content.qapairs?.map((qa) => (
           <Card key={qa.id}>
             <CardContent className="p-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div className="space-y-6">
                 {/* Question */}
-                <div className="space-y-2">
-                  <h4 className="font-medium text-foreground">RFP Question</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <MessageSquare className="h-5 w-5 text-primary" />
+                    <h4 className="font-medium text-foreground">RFP Question #{qa.id}</h4>
+                  </div>
                   <div className="bg-muted/50 p-4 rounded-lg">
-                    <p className="text-sm text-muted-foreground">{qa.question}</p>
+                    <p className="text-sm text-muted-foreground font-medium">{qa.question}</p>
                   </div>
                 </div>
                 
-                {/* Answer */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
+                {/* Answer Editor */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-primary" />
                     <h4 className="font-medium text-foreground">AI-Suggested Answer</h4>
-                    <Button 
-                      onClick={() => handleSave(`qa-${qa.id}`, savedContent[`qa-${qa.id}`] || qa.answer)}
-                      variant="outline"
-                      size="sm"
-                      className="flex items-center gap-2"
-                    >
-                      <Save className="h-4 w-4" />
-                      Save
-                    </Button>
                   </div>
-                  <Textarea
-                    value={savedContent[`qa-${qa.id}`] || qa.answer}
-                    onChange={(e) => setSavedContent(prev => ({ ...prev, [`qa-${qa.id}`]: e.target.value }))}
-                    className="min-h-[120px] text-sm"
-                    placeholder="AI-suggested answer..."
+                  <RichTextEditor
+                    value={savedContent[`qa-${qa.id}`] || `<p>${qa.answer}</p>`}
+                    onChange={(value) => setSavedContent(prev => ({ ...prev, [`qa-${qa.id}`]: value }))}
+                    placeholder="Edit your answer here..."
+                    minHeight="200px"
                   />
                 </div>
               </div>
