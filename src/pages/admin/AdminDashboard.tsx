@@ -4,6 +4,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { 
   Upload, 
   Database, 
@@ -26,6 +28,10 @@ const AdminDashboard = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
   const [showRFPReference, setShowRFPReference] = useState(false);
+  const [selectedTone, setSelectedTone] = useState("formal");
+  const [showDisclaimerEditor, setShowDisclaimerEditor] = useState(false);
+  const [disclaimerText, setDisclaimerText] = useState("This response is generated using AI assistance and should be reviewed for accuracy and compliance before submission.");
+  const [viewingResponse, setViewingResponse] = useState<any>(null);
   const { toast } = useToast();
 
   const handleBulkUpload = () => {
@@ -101,6 +107,51 @@ const AdminDashboard = () => {
       case 'submitted': return 'bg-blue-100 text-blue-800';
       default: return 'bg-gray-100 text-gray-800';
     }
+  };
+
+  const handleToneSelect = (tone: string) => {
+    setSelectedTone(tone);
+    toast({
+      title: "Tone Updated",
+      description: `Default tone set to ${tone}`,
+    });
+  };
+
+  const handleViewResponse = (response: any) => {
+    setViewingResponse(response);
+    toast({
+      title: "Opening Response",
+      description: `Viewing ${response.title}`,
+    });
+  };
+
+  const handleAuditResponse = (response: any) => {
+    toast({
+      title: "Audit Initiated",
+      description: `Starting audit for ${response.title}`,
+    });
+  };
+
+  const handleExportResponse = (response: any) => {
+    toast({
+      title: "Export Started",
+      description: `Exporting ${response.title} as PDF`,
+    });
+    // Simulate download
+    setTimeout(() => {
+      const link = document.createElement('a');
+      link.href = '#';
+      link.download = `${response.title.replace(/\s+/g, '_')}.pdf`;
+      link.click();
+    }, 1000);
+  };
+
+  const handleSaveDisclaimer = () => {
+    setShowDisclaimerEditor(false);
+    toast({
+      title: "Disclaimer Updated",
+      description: "Compliance disclaimer has been saved",
+    });
   };
 
   return (
@@ -244,20 +295,32 @@ const AdminDashboard = () => {
                       </Badge>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Button variant="outline" size="sm">
-                      <Eye className="h-4 w-4 mr-1" />
-                      View
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Edit className="h-4 w-4 mr-1" />
-                      Audit
-                    </Button>
-                    <Button variant="outline" size="sm">
-                      <Download className="h-4 w-4 mr-1" />
-                      Export
-                    </Button>
-                  </div>
+                   <div className="flex items-center gap-2">
+                     <Button 
+                       variant="outline" 
+                       size="sm"
+                       onClick={() => handleViewResponse(response)}
+                     >
+                       <Eye className="h-4 w-4 mr-1" />
+                       View
+                     </Button>
+                     <Button 
+                       variant="outline" 
+                       size="sm"
+                       onClick={() => handleAuditResponse(response)}
+                     >
+                       <Edit className="h-4 w-4 mr-1" />
+                       Audit
+                     </Button>
+                     <Button 
+                       variant="outline" 
+                       size="sm"
+                       onClick={() => handleExportResponse(response)}
+                     >
+                       <Download className="h-4 w-4 mr-1" />
+                       Export
+                     </Button>
+                   </div>
                 </div>
               ))}
             </div>
@@ -274,20 +337,32 @@ const AdminDashboard = () => {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <h3 className="font-medium">Default Tone Settings</h3>
-                <div className="space-y-2">
-                  <Button variant="outline" className="w-full justify-start">
-                    Formal (Default)
-                  </Button>
-                  <Button variant="ghost" className="w-full justify-start">
-                    Persuasive
-                  </Button>
-                  <Button variant="ghost" className="w-full justify-start">
-                    Technical
-                  </Button>
-                </div>
-              </div>
+               <div className="space-y-4">
+                 <h3 className="font-medium">Default Tone Settings</h3>
+                 <div className="space-y-2">
+                   <Button 
+                     variant={selectedTone === "formal" ? "default" : "outline"} 
+                     className="w-full justify-start"
+                     onClick={() => handleToneSelect("formal")}
+                   >
+                     Formal {selectedTone === "formal" && "(Selected)"}
+                   </Button>
+                   <Button 
+                     variant={selectedTone === "persuasive" ? "default" : "ghost"} 
+                     className="w-full justify-start"
+                     onClick={() => handleToneSelect("persuasive")}
+                   >
+                     Persuasive {selectedTone === "persuasive" && "(Selected)"}
+                   </Button>
+                   <Button 
+                     variant={selectedTone === "technical" ? "default" : "ghost"} 
+                     className="w-full justify-start"
+                     onClick={() => handleToneSelect("technical")}
+                   >
+                     Technical {selectedTone === "technical" && "(Selected)"}
+                   </Button>
+                 </div>
+               </div>
               
               <div className="space-y-4">
                 <h3 className="font-medium">Compliance & Disclaimers</h3>
@@ -302,9 +377,13 @@ const AdminDashboard = () => {
                     </div>
                   </div>
                 </div>
-                <Button variant="outline" className="w-full">
-                  Edit Disclaimers
-                </Button>
+                 <Button 
+                   variant="outline" 
+                   className="w-full"
+                   onClick={() => setShowDisclaimerEditor(true)}
+                 >
+                   Edit Disclaimers
+                 </Button>
               </div>
             </div>
           </CardContent>
@@ -314,6 +393,66 @@ const AdminDashboard = () => {
             isOpen={showRFPReference}
             onClose={() => setShowRFPReference(false)}
           />
+
+          {/* Disclaimer Editor Modal */}
+          <Dialog open={showDisclaimerEditor} onOpenChange={setShowDisclaimerEditor}>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>Edit Compliance Disclaimer</DialogTitle>
+              </DialogHeader>
+              <div className="space-y-4">
+                <Textarea
+                  value={disclaimerText}
+                  onChange={(e) => setDisclaimerText(e.target.value)}
+                  rows={6}
+                  placeholder="Enter your compliance disclaimer text..."
+                  className="w-full"
+                />
+                <div className="flex justify-end gap-2">
+                  <Button 
+                    variant="outline" 
+                    onClick={() => setShowDisclaimerEditor(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button onClick={handleSaveDisclaimer}>
+                    Save Disclaimer
+                  </Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
+
+          {/* Response Viewer Modal */}
+          {viewingResponse && (
+            <Dialog open={!!viewingResponse} onOpenChange={() => setViewingResponse(null)}>
+              <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>{viewingResponse.title}</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4">
+                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                    <span>Uploaded by {viewingResponse.uploader}</span>
+                    <span>•</span>
+                    <span>{viewingResponse.date}</span>
+                    <Badge className={getStatusColor(viewingResponse.status)}>
+                      {viewingResponse.status}
+                    </Badge>
+                  </div>
+                  <div className="p-4 border rounded-lg bg-muted/50">
+                    <p className="text-sm">
+                      This is a preview of the generated RFP response. The actual response content would be displayed here with full formatting and all sections included.
+                    </p>
+                  </div>
+                  <div className="flex justify-end">
+                    <Button onClick={() => setViewingResponse(null)}>
+                      Close
+                    </Button>
+                  </div>
+                </div>
+              </DialogContent>
+            </Dialog>
+          )}
         </div>
       </div>
     </div>
