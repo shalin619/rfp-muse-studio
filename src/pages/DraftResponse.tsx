@@ -32,51 +32,110 @@ const DraftResponse = () => {
     switch (processingOption) {
       case "auto-draft":
         return {
-          fullDocument: `EXECUTIVE SUMMARY
+          fullDocument: `<h1>EXECUTIVE SUMMARY</h1>
 
-Our bank is pleased to submit this comprehensive proposal for the Digital Banking Modernization Initiative. With over 75 years of banking excellence and a proven track record in digital transformation, we are uniquely positioned to deliver the innovative solutions you require.
+<p>First National Bank is pleased to submit this comprehensive proposal for your Digital Banking Transformation Initiative. As a federally chartered institution with over 75 years of banking excellence and $2.5 billion in assets under management, we bring proven expertise in delivering secure, scalable financial technology solutions that meet the evolving needs of modern banking customers.</p>
 
-COMPANY QUALIFICATIONS
+<p>Our proposal outlines a comprehensive digital banking platform that will position your institution at the forefront of financial innovation while maintaining the highest standards of security, compliance, and customer service that define banking excellence.</p>
 
-Established in 1948, our institution has grown from a community bank to a regional leader with assets exceeding $2.5 billion. We are FDIC-insured and maintain strong regulatory relationships with both state and federal banking authorities.
+<h2>COMPANY QUALIFICATIONS</h2>
 
-Key qualifications include:
-• 75+ years of banking experience
-• $2.5B+ in assets under management
-• SOC 2 Type II compliance
-• PCI DSS Level 1 certification
-• Award-winning digital banking platform
+<p><strong>Institutional Overview:</strong><br>
+First National Bank, established in 1948, has evolved from a community-focused institution to a regional banking leader serving over 150,000 customers across multiple states. Our institution maintains:</p>
 
-TECHNICAL APPROACH
+<ul>
+<li>FDIC insurance and strong regulatory standing with OCC and Federal Reserve</li>
+<li>$2.5 billion in total assets under management</li>
+<li>75+ years of continuous banking operations</li>
+<li>Award-winning digital banking platform with 98.5% uptime</li>
+<li>ISO 27001 and SOC 2 Type II certified operations</li>
+</ul>
 
-We propose a cloud-native architecture utilizing microservices and API-first design principles. Our solution leverages AWS infrastructure with multi-region deployment for maximum reliability and performance.
+<p><strong>Digital Banking Expertise:</strong><br>
+Our technology team has successfully implemented digital transformation projects for over 50 financial institutions, including:</p>
 
-Core technical components:
-• Microservices architecture for scalability
-• API-first design for seamless integration
-• Multi-cloud deployment strategy
-• Advanced encryption and security protocols
-• Real-time monitoring and analytics
+<ul>
+<li>Mobile-first banking applications with biometric authentication</li>
+<li>Real-time payment processing systems</li>
+<li>Advanced fraud detection and prevention platforms</li>
+<li>Regulatory reporting and compliance management systems</li>
+</ul>
 
-SECURITY & COMPLIANCE FRAMEWORK
+<h2>TECHNICAL APPROACH</h2>
 
-Security is paramount in our approach. Our comprehensive framework includes multiple layers of protection and adherence to all applicable regulations.
+<p><strong>Architecture Foundation:</strong><br>
+We propose a modern, cloud-native architecture built on microservices principles to ensure scalability, reliability, and future adaptability:</p>
 
-Security measures include:
-• End-to-end encryption
-• Multi-factor authentication
-• Continuous security monitoring
-• Regular penetration testing
-• Incident response procedures
+<ul>
+<li><strong>Cloud Infrastructure:</strong> Multi-region AWS deployment with automatic failover</li>
+<li><strong>Microservices Design:</strong> Independently scalable services for account management, payments, and customer communications</li>
+<li><strong>API-First Integration:</strong> RESTful and GraphQL APIs enabling seamless third-party integrations</li>
+<li><strong>Real-Time Processing:</strong> Event-driven architecture supporting instant transaction processing</li>
+<li><strong>Mobile Optimization:</strong> Progressive Web App (PWA) technology ensuring consistent experience across devices</li>
+</ul>
 
-IMPLEMENTATION TIMELINE
+<p><strong>Core Banking Integration:</strong><br>
+Our solution seamlessly integrates with existing core banking systems including FIS, Fiserv, and Jack Henry platforms, ensuring minimal disruption to current operations while maximizing new functionality.</p>
 
-We propose a phased implementation approach to minimize risk and ensure smooth transition:
+<h2>SECURITY AND COMPLIANCE FRAMEWORK</h2>
 
-Phase 1 (Months 1-3): Requirements gathering and system analysis
-Phase 2 (Months 4-8): Core system development and integration
-Phase 3 (Months 9-12): Testing, training, and deployment
-Phase 4 (Months 13-15): Post-implementation support and optimization`
+<p><strong>Multi-Layered Security Architecture:</strong></p>
+
+<ul>
+<li><strong>Data Protection:</strong> AES-256 encryption at rest and TLS 1.3 for data in transit</li>
+<li><strong>Authentication:</strong> Multi-factor authentication with biometric verification options</li>
+<li><strong>Network Security:</strong> Web Application Firewall (WAF) and DDoS protection</li>
+<li><strong>Monitoring:</strong> 24/7 Security Operations Center (SOC) with AI-powered threat detection</li>
+<li><strong>Access Controls:</strong> Role-based permissions with principle of least privilege</li>
+</ul>
+
+<p><strong>Regulatory Compliance:</strong><br>
+Our platform ensures full compliance with banking regulations including:</p>
+
+<ul>
+<li>FFIEC IT Examination Handbook guidelines</li>
+<li>PCI DSS Level 1 certification</li>
+<li>GLBA privacy and safeguarding requirements</li>
+<li>BSA/AML monitoring and reporting capabilities</li>
+<li>WCAG 2.1 AA accessibility standards</li>
+</ul>
+
+<h2>IMPLEMENTATION TIMELINE</h2>
+
+<p><strong>Phase 1: Discovery and Planning (Months 1-2)</strong></p>
+<ul>
+<li>Comprehensive requirements analysis and system assessment</li>
+<li>Integration planning with existing core banking systems</li>
+<li>Security assessment and compliance gap analysis</li>
+<li>Project team establishment and stakeholder alignment</li>
+</ul>
+
+<p><strong>Phase 2: Development and Configuration (Months 3-6)</strong></p>
+<ul>
+<li>Core platform development and customization</li>
+<li>API integration with existing banking systems</li>
+<li>Security implementation and testing</li>
+<li>User interface development and branding customization</li>
+</ul>
+
+<p><strong>Phase 3: Testing and Training (Months 7-8)</strong></p>
+<ul>
+<li>Comprehensive system testing including security penetration testing</li>
+<li>User acceptance testing with key stakeholders</li>
+<li>Staff training programs for administrators and customer service teams</li>
+<li>Regulatory review and approval processes</li>
+</ul>
+
+<p><strong>Phase 4: Deployment and Support (Months 9-12)</strong></p>
+<ul>
+<li>Phased rollout to minimize operational disruption</li>
+<li>Customer migration and onboarding support</li>
+<li>Post-implementation monitoring and optimization</li>
+<li>Ongoing support and maintenance services</li>
+</ul>
+
+<p><strong>Investment and Value Proposition:</strong><br>
+This comprehensive digital banking solution represents a strategic investment in your institution's future, with projected ROI of 180% within three years through increased customer engagement, operational efficiency, and new revenue opportunities.</p>`
         };
       
       case "section-wise":
