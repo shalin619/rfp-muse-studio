@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   MessageSquare, 
   ToggleLeft,
-  ArrowLeft
+  ArrowLeft,
+  FileText
 } from "lucide-react";
 import RichTextEditor from "@/components/RichTextEditor";
 
@@ -16,7 +18,20 @@ const Review = () => {
   const navigate = useNavigate();
   const [trackChanges, setTrackChanges] = useState(false);
   const [showComments, setShowComments] = useState(true);
-  const [responseContent, setResponseContent] = useState(`<h1>EXECUTIVE SUMMARY</h1>
+  const [processingOption, setProcessingOption] = useState("auto-draft");
+  const [savedContent, setSavedContent] = useState<{[key: string]: string}>({});
+
+  useEffect(() => {
+    const option = sessionStorage.getItem('processingOption') || 'auto-draft';
+    setProcessingOption(option);
+  }, []);
+
+  // Same content structure as DraftResponse page
+  const getContentForOption = () => {
+    switch (processingOption) {
+      case "auto-draft":
+        return {
+          fullDocument: `<h1>EXECUTIVE SUMMARY</h1>
 
 <p>First National Bank is pleased to submit this comprehensive proposal for your Digital Banking Transformation Initiative. As a federally chartered institution with over 75 years of banking excellence and $2.5 billion in assets under management, we bring proven expertise in delivering secure, scalable financial technology solutions that meet the evolving needs of modern banking customers.</p>
 
@@ -119,7 +134,157 @@ Our platform ensures full compliance with banking regulations including:</p>
 </ul>
 
 <p><strong>Investment and Value Proposition:</strong><br>
-This comprehensive digital banking solution represents a strategic investment in your institution's future, with projected ROI of 180% within three years through increased customer engagement, operational efficiency, and new revenue opportunities.</p>`);
+This comprehensive digital banking solution represents a strategic investment in your institution's future, with projected ROI of 180% within three years through increased customer engagement, operational efficiency, and new revenue opportunities.</p>`
+        };
+      
+      case "section-wise":
+        return {
+          sections: [
+            {
+              id: "executive-summary",
+              title: "Executive Summary",
+              content: "First National Bank is pleased to submit this comprehensive proposal for your Digital Banking Transformation Initiative. As a federally chartered institution with over 75 years of banking excellence and $2.5 billion in assets under management, we bring proven expertise in delivering secure, scalable financial technology solutions. Our proposal outlines a comprehensive digital banking platform that will position your institution at the forefront of financial innovation while maintaining the highest standards of security, compliance, and customer service."
+            },
+            {
+              id: "compliance",
+              title: "Security & Compliance Framework", 
+              content: "Our multi-layered security architecture includes AES-256 encryption at rest, TLS 1.3 for data in transit, multi-factor authentication with biometric verification, 24/7 SOC monitoring with AI-powered threat detection, and role-based access controls. We ensure full compliance with FFIEC IT Examination Handbook guidelines, PCI DSS Level 1 certification, GLBA privacy requirements, BSA/AML monitoring capabilities, and WCAG 2.1 AA accessibility standards. Our platform is ISO 27001 and SOC 2 Type II certified with continuous compliance monitoring."
+            },
+            {
+              id: "technical-details",
+              title: "Technical Approach & Architecture",
+              content: "We propose a modern, cloud-native architecture built on microservices principles using multi-region AWS deployment with automatic failover. Our solution features independently scalable services for account management, payments, and customer communications, RESTful and GraphQL APIs for seamless third-party integrations, event-driven architecture supporting instant transaction processing, and Progressive Web App (PWA) technology ensuring consistent cross-device experience. Core banking integration supports FIS, Fiserv, and Jack Henry platforms with minimal operational disruption."
+            },
+            {
+              id: "pricing",
+              title: "Investment & Implementation Timeline",
+              content: "Our 4-phase implementation approach includes: Phase 1 (Months 1-2) - Discovery and planning with comprehensive requirements analysis; Phase 2 (Months 3-6) - Development and configuration with core platform customization; Phase 3 (Months 7-8) - Testing and training with security penetration testing; Phase 4 (Months 9-12) - Deployment and support with phased rollout. This strategic investment delivers projected ROI of 180% within three years through increased customer engagement, operational efficiency, and new revenue opportunities."
+            }
+          ]
+        };
+      
+      case "qa-style":
+        return {
+          qapairs: [
+            {
+              id: 1,
+              question: "Describe your institution's experience and qualifications in providing digital banking solutions, including years of operation, asset size, and relevant certifications.",
+              answer: "First National Bank brings 75+ years of continuous banking operations since our establishment in 1948, evolving from a community-focused institution to a regional banking leader with $2.5 billion in total assets under management. We serve over 150,000 customers across multiple states and maintain FDIC insurance with strong regulatory standing with the OCC and Federal Reserve. Our digital expertise includes ISO 27001 and SOC 2 Type II certifications, successful implementation of digital transformation projects for over 50 financial institutions, and an award-winning digital banking platform with 98.5% uptime. Our technology team has delivered mobile-first banking applications with biometric authentication, real-time payment processing systems, advanced fraud detection platforms, and regulatory reporting systems."
+            },
+            {
+              id: 2,
+              question: "Detail your security framework and compliance approach, including specific measures for data protection, regulatory adherence, and risk management.",
+              answer: "Our comprehensive multi-layered security architecture ensures the highest level of protection with AES-256 encryption at rest and TLS 1.3 for data in transit, multi-factor authentication with biometric verification options, Web Application Firewall (WAF) and DDoS protection, 24/7 Security Operations Center (SOC) with AI-powered threat detection, and role-based permissions following the principle of least privilege. We maintain full regulatory compliance with FFIEC IT Examination Handbook guidelines, PCI DSS Level 1 certification, GLBA privacy and safeguarding requirements, BSA/AML monitoring and reporting capabilities, and WCAG 2.1 AA accessibility standards. Our platform undergoes continuous compliance monitoring, regular penetration testing, and maintains comprehensive incident response procedures."
+            },
+            {
+              id: 3,
+              question: "Provide a detailed technical approach including architecture design, integration capabilities, and scalability considerations for the proposed digital banking solution.",
+              answer: "We propose a modern, cloud-native architecture built on microservices principles to ensure scalability, reliability, and future adaptability. Our technical foundation includes multi-region AWS deployment with automatic failover capabilities, independently scalable microservices for account management, payments, and customer communications, RESTful and GraphQL APIs enabling seamless third-party integrations, event-driven architecture supporting instant transaction processing, and Progressive Web App (PWA) technology ensuring consistent cross-device experience. Our solution seamlessly integrates with existing core banking systems including FIS, Fiserv, and Jack Henry platforms, minimizing disruption to current operations while maximizing new functionality. The architecture supports real-time processing, advanced analytics, and can scale to accommodate future growth and evolving banking requirements."
+            },
+            {
+              id: 4,
+              question: "Outline your implementation methodology, timeline, project phases, and post-implementation support strategy.",
+              answer: "Our proven 4-phase implementation methodology minimizes risk and ensures smooth transition: Phase 1 (Months 1-2) includes comprehensive requirements analysis and system assessment, integration planning with existing core banking systems, security assessment and compliance gap analysis, and project team establishment with stakeholder alignment. Phase 2 (Months 3-6) covers core platform development and customization, API integration with existing banking systems, security implementation and testing, and user interface development with branding customization. Phase 3 (Months 7-8) involves comprehensive system testing including security penetration testing, user acceptance testing with key stakeholders, staff training programs for administrators and customer service teams, and regulatory review and approval processes. Phase 4 (Months 9-12) includes phased rollout to minimize operational disruption, customer migration and onboarding support, post-implementation monitoring and optimization, and ongoing support and maintenance services with 24/7 technical assistance."
+            }
+          ]
+        };
+      
+      default:
+        return { fullDocument: "Sample content for default processing option." };
+    }
+  };
+
+  const renderAutoDraftView = () => {
+    const content = getContentForOption();
+    const key = "fullDocument";
+    
+    return (
+      <RichTextEditor
+        value={savedContent[key] || content.fullDocument}
+        onChange={(value) => setSavedContent(prev => ({ ...prev, [key]: value }))}
+        placeholder="Review and edit your RFP response..."
+        minHeight="600px"
+      />
+    );
+  };
+
+  const renderSectionWiseView = () => {
+    const content = getContentForOption();
+    
+    return (
+      <Tabs defaultValue="executive-summary">
+        <TabsList className="grid w-full grid-cols-4">
+          {content.sections?.map((section) => (
+            <TabsTrigger key={section.id} value={section.id} className="text-xs">
+              {section.title}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+        
+        {content.sections?.map((section) => (
+          <TabsContent key={section.id} value={section.id} className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileText className="h-5 w-5" />
+                  {section.title}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <RichTextEditor
+                  value={savedContent[section.id] || `<h2>${section.title}</h2>\n\n<p>${section.content}</p>`}
+                  onChange={(value) => setSavedContent(prev => ({ ...prev, [section.id]: value }))}
+                  placeholder={`Edit content for ${section.title}...`}
+                  minHeight="400px"
+                />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        ))}
+      </Tabs>
+    );
+  };
+
+  const renderQAStyleView = () => {
+    const content = getContentForOption();
+    
+    return (
+      <div className="space-y-6">
+        {content.qapairs?.map((qa) => (
+          <Card key={qa.id}>
+            <CardContent className="p-6">
+              <div className="space-y-6">
+                {/* Question */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <MessageSquare className="h-5 w-5 text-primary" />
+                    <h4 className="font-medium text-foreground">RFP Question #{qa.id}</h4>
+                  </div>
+                  <div className="bg-muted/50 p-4 rounded-lg">
+                    <p className="text-sm text-muted-foreground font-medium">{qa.question}</p>
+                  </div>
+                </div>
+                
+                {/* Answer Editor */}
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-5 w-5 text-primary" />
+                    <h4 className="font-medium text-foreground">Your Answer</h4>
+                  </div>
+                  <RichTextEditor
+                    value={savedContent[`qa-${qa.id}`] || `<p>${qa.answer}</p>`}
+                    onChange={(value) => setSavedContent(prev => ({ ...prev, [`qa-${qa.id}`]: value }))}
+                    placeholder="Edit your answer here..."
+                    minHeight="200px"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    );
+  };
 
   const comments = [
     {
@@ -192,17 +357,18 @@ This comprehensive digital banking solution represents a strategic investment in
                 >
                   {showComments ? 'Hide Comments' : 'Show Comments'}
                 </Button>
+                <Badge variant="secondary" className="ml-2">
+                  {processingOption === "auto-draft" ? "Full Response" : 
+                   processingOption === "section-wise" ? "Section-wise" : "Q&A Style"}
+                </Badge>
               </div>
             </CardContent>
           </Card>
 
-          {/* Rich Text Editor */}
-          <RichTextEditor
-            value={responseContent}
-            onChange={setResponseContent}
-            placeholder="Start editing your RFP response..."
-            minHeight="600px"
-          />
+          {/* Dynamic Content Based on Processing Option */}
+          {processingOption === "auto-draft" && renderAutoDraftView()}
+          {processingOption === "section-wise" && renderSectionWiseView()}
+          {processingOption === "qa-style" && renderQAStyleView()}
         </div>
 
         {/* Comments Sidebar */}
