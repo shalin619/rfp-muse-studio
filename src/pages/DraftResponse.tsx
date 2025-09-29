@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion";
 import { AlertTriangle, FileText, Users, Save } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import RichTextEditor from "@/components/RichTextEditor";
 
 const DraftResponse = () => {
   const navigate = useNavigate();
@@ -143,30 +144,12 @@ Phase 4 (Months 13-15): Post-implementation support and optimization`
     const key = "fullDocument";
     
     return (
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Generated Full Response</CardTitle>
-            <Button 
-              onClick={() => handleSave(key, savedContent[key] || content.fullDocument)}
-              variant="outline"
-              size="sm"
-              className="flex items-center gap-2"
-            >
-              <Save className="h-4 w-4" />
-              Save Changes
-            </Button>
-          </div>
-        </CardHeader>
-        <CardContent>
-          <Textarea
-            value={savedContent[key] || content.fullDocument}
-            onChange={(e) => setSavedContent(prev => ({ ...prev, [key]: e.target.value }))}
-            className="min-h-[600px] text-sm leading-relaxed"
-            placeholder="AI-generated full response..."
-          />
-        </CardContent>
-      </Card>
+      <RichTextEditor
+        value={savedContent[key] || content.fullDocument}
+        onChange={(value) => setSavedContent(prev => ({ ...prev, [key]: value }))}
+        placeholder="AI-generated full response..."
+        minHeight="600px"
+      />
     );
   };
 

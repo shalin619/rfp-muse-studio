@@ -2,50 +2,20 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { 
-  Bold, 
-  Italic, 
-  List, 
-  Highlighter, 
   MessageSquare, 
-  FileText,
   ToggleLeft
 } from "lucide-react";
+import RichTextEditor from "@/components/RichTextEditor";
 
 const Review = () => {
   const navigate = useNavigate();
   const [trackChanges, setTrackChanges] = useState(false);
   const [showComments, setShowComments] = useState(true);
-
-  const comments = [
-    {
-      id: 1,
-      author: "Sarah Johnson",
-      role: "SME - Compliance",
-      text: "Need to update the SOC compliance details to include our latest certification.",
-      timestamp: "2 hours ago",
-    },
-    {
-      id: 2,
-      author: "Mike Chen", 
-      role: "SME - Technical",
-      text: "The cloud architecture section looks good, but we should mention our disaster recovery capabilities.",
-      timestamp: "1 hour ago",
-    },
-    {
-      id: 3,
-      author: "Lisa Rodriguez",
-      role: "Legal Review",
-      text: "Please review the liability clauses in section 4.2.",
-      timestamp: "30 minutes ago",
-    },
-  ];
-
-  const responseContent = `EXECUTIVE SUMMARY
+  const [responseContent, setResponseContent] = useState(`EXECUTIVE SUMMARY
 
 Our bank is pleased to submit this comprehensive proposal for the Digital Banking Modernization Initiative. With over 75 years of banking excellence and a proven track record in digital transformation, we are uniquely positioned to deliver the innovative solutions you require.
 
@@ -89,7 +59,31 @@ We propose a phased implementation approach to minimize risk and ensure smooth t
 Phase 1 (Months 1-3): Requirements gathering and system analysis
 Phase 2 (Months 4-8): Core system development and integration
 Phase 3 (Months 9-12): Testing, training, and deployment
-Phase 4 (Months 13-15): Post-implementation support and optimization`;
+Phase 4 (Months 13-15): Post-implementation support and optimization`);
+
+  const comments = [
+    {
+      id: 1,
+      author: "Sarah Johnson",
+      role: "SME - Compliance",
+      text: "Need to update the SOC compliance details to include our latest certification.",
+      timestamp: "2 hours ago",
+    },
+    {
+      id: 2,
+      author: "Mike Chen", 
+      role: "SME - Technical",
+      text: "The cloud architecture section looks good, but we should mention our disaster recovery capabilities.",
+      timestamp: "1 hour ago",
+    },
+    {
+      id: 3,
+      author: "Lisa Rodriguez",
+      role: "Legal Review",
+      text: "Please review the liability clauses in section 4.2.",
+      timestamp: "30 minutes ago",
+    },
+  ];
 
   return (
     <div className="space-y-6">
@@ -104,58 +98,40 @@ Phase 4 (Months 13-15): Post-implementation support and optimization`;
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Main Editor */}
-        <div className="lg:col-span-3 space-y-4">
-          {/* Toolbar */}
+        <div className={`space-y-4 ${showComments ? 'lg:col-span-3' : 'lg:col-span-4'}`}>
+          {/* Track Changes Control */}
           <Card>
             <CardContent className="p-4">
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2 border-r border-border pr-4">
-                    <Button variant="ghost" size="sm">
-                      <Bold className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <Italic className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <List className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm">
-                      <Highlighter className="h-4 w-4" />
-                    </Button>
-                  </div>
-                  
-                  <div className="flex items-center space-x-2">
-                    <Switch
-                      id="track-changes"
-                      checked={trackChanges}
-                      onCheckedChange={setTrackChanges}
-                    />
-                    <Label htmlFor="track-changes" className="flex items-center gap-2">
-                      <ToggleLeft className="h-4 w-4" />
-                      Track Changes
-                    </Label>
-                  </div>
+                <div className="flex items-center space-x-2">
+                  <Switch
+                    id="track-changes"
+                    checked={trackChanges}
+                    onCheckedChange={setTrackChanges}
+                  />
+                  <Label htmlFor="track-changes" className="flex items-center gap-2">
+                    <ToggleLeft className="h-4 w-4" />
+                    Track Changes
+                  </Label>
                 </div>
-
-                <Badge variant="secondary" className="flex items-center gap-2">
-                  <FileText className="h-3 w-3" />
-                  Auto-saved 2 minutes ago
-                </Badge>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={() => setShowComments(!showComments)}
+                >
+                  {showComments ? 'Hide Comments' : 'Show Comments'}
+                </Button>
               </div>
             </CardContent>
           </Card>
 
-          {/* Editor */}
-          <Card>
-            <CardContent className="p-6">
-              <Textarea
-                value={responseContent}
-                className="min-h-[600px] border-0 resize-none focus-visible:ring-0 text-sm leading-relaxed"
-                placeholder="Start editing your RFP response..."
-              />
-            </CardContent>
-          </Card>
+          {/* Rich Text Editor */}
+          <RichTextEditor
+            value={responseContent}
+            onChange={setResponseContent}
+            placeholder="Start editing your RFP response..."
+            minHeight="600px"
+          />
         </div>
 
         {/* Comments Sidebar */}

@@ -17,8 +17,11 @@ import { useToast } from "@/hooks/use-toast";
 
 const Output = () => {
   const navigate = useNavigate();
-  const { toast } = useToast();
   const [emailRecipient, setEmailRecipient] = useState("");
+  const [emailSubject, setEmailSubject] = useState("RFP Response - [Company Name]");
+  const [emailMessage, setEmailMessage] = useState("Please find attached our comprehensive response to your RFP.");
+  const [showEmailDialog, setShowEmailDialog] = useState(false);
+  const { toast } = useToast();
 
   const handleDownload = (format: 'word' | 'pdf') => {
     // Create a blob with sample content for demo

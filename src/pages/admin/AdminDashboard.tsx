@@ -13,13 +13,16 @@ import {
   AlertCircle,
   Download,
   Eye,
-  Edit
+  Edit,
+  Search
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import RFPReferenceModal from "@/components/RFPReferenceModal";
 
 const AdminDashboard = () => {
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [showRFPReference, setShowRFPReference] = useState(false);
   const { toast } = useToast();
 
   const handleBulkUpload = () => {
@@ -158,10 +161,20 @@ const AdminDashboard = () => {
         {/* Bulk Upload Section */}
         <Card>
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Upload className="h-5 w-5" />
-              Upload Historical RFPs & Documents
-            </CardTitle>
+            <div className="flex items-center justify-between">
+              <CardTitle className="flex items-center gap-2">
+                <Upload className="h-5 w-5" />
+                Upload Historical RFPs & Documents
+              </CardTitle>
+              <Button 
+                variant="outline"
+                onClick={() => setShowRFPReference(true)}
+                className="flex items-center gap-2"
+              >
+                <Search className="h-4 w-4" />
+                See Reference RFPs Uploaded
+              </Button>
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div 
@@ -276,6 +289,11 @@ const AdminDashboard = () => {
             </div>
           </CardContent>
         </Card>
+
+        <RFPReferenceModal
+          isOpen={showRFPReference}
+          onClose={() => setShowRFPReference(false)}
+        />
       </div>
     </div>
   );
