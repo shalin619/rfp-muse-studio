@@ -96,7 +96,7 @@ const UserWorkspace = () => {
                   >
                     <div className="text-left">
                       <div className="font-medium">{tone.label}</div>
-                      <div className="text-xs text-muted-foreground">{tone.desc}</div>
+                      <div className={`text-xs ${selectedTone === tone.id ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{tone.desc}</div>
                     </div>
                   </Button>
                 ))}
@@ -121,7 +121,7 @@ const UserWorkspace = () => {
                   >
                     <div className="text-left">
                       <div className="font-medium">{length.label}</div>
-                      <div className="text-xs text-muted-foreground">{length.desc}</div>
+                      <div className={`text-xs ${selectedLength === length.id ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{length.desc}</div>
                     </div>
                   </Button>
                 ))}
@@ -146,7 +146,7 @@ const UserWorkspace = () => {
                   >
                     <div className="text-left">
                       <div className="font-medium">{style.label}</div>
-                      <div className="text-xs text-muted-foreground">{style.desc}</div>
+                      <div className={`text-xs ${selectedStyle === style.id ? 'text-primary-foreground/80' : 'text-muted-foreground'}`}>{style.desc}</div>
                     </div>
                   </Button>
                 ))}
