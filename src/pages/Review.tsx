@@ -97,7 +97,7 @@ Phase 4 (Months 13-15): Post-implementation support and optimization`;
         <h1 className="text-3xl font-semibold text-foreground">
           Review & Edit Response
         </h1>
-        <Button onClick={() => navigate("/output")} variant="outline">
+        <Button onClick={() => navigate("/user/output")} variant="outline">
           Finalize Response
         </Button>
       </div>
@@ -203,7 +203,7 @@ Phase 4 (Months 13-15): Post-implementation support and optimization`;
       </div>
 
       <div className="flex justify-end">
-        <Button onClick={() => navigate("/output")} size="lg">
+        <Button onClick={() => navigate("/user/output")} size="lg">
           Finalize Response
         </Button>
       </div>

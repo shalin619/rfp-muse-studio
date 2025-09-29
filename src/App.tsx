@@ -3,8 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
-import Dashboard from "./pages/Dashboard";
+import MainDashboard from "./pages/MainDashboard";
+import UserWorkspace from "./pages/user/UserWorkspace";
 import Upload from "./pages/Upload";
 import ProcessingOptions from "./pages/ProcessingOptions";
 import DraftResponse from "./pages/DraftResponse";
@@ -21,8 +21,8 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Dashboard />} />
+          <Route path="/" element={<MainDashboard />} />
+          <Route path="/user" element={<UserWorkspace />}>
             <Route path="upload" element={<Upload />} />
             <Route path="processing-options" element={<ProcessingOptions />} />
             <Route path="draft-response" element={<DraftResponse />} />

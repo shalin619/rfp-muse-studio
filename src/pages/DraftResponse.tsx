@@ -274,7 +274,7 @@ Phase 4 (Months 13-15): Post-implementation support and optimization`
                             "Q&A Style Responses"}
           </p>
         </div>
-        <Button onClick={() => navigate("/review")} variant="outline">
+        <Button onClick={() => navigate("/user/review")} variant="outline">
           Continue to Review
         </Button>
       </div>
@@ -284,7 +284,7 @@ Phase 4 (Months 13-15): Post-implementation support and optimization`
       {processingOption === "qa-style" && renderQAStyleView()}
 
       <div className="flex justify-end">
-        <Button onClick={() => navigate("/review")} size="lg">
+        <Button onClick={() => navigate("/user/review")} size="lg">
           Continue to Review & Edit
         </Button>
       </div>

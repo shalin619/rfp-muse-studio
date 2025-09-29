@@ -116,11 +116,11 @@ const Upload = () => {
             />
           </div>
 
-          <Button 
-            onClick={() => navigate("/processing-options")}
-            className="w-full"
-            size="lg"
-          >
+            <Button 
+              onClick={() => navigate("/user/processing-options")}
+              className="w-full"
+              size="lg"
+            >
             Proceed to Processing Options
           </Button>
         </CardContent>

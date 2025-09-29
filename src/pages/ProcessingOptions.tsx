@@ -13,7 +13,7 @@ const ProcessingOptions = () => {
   const handleProcessRFP = () => {
     // Store selected processing option for the draft response page
     sessionStorage.setItem('processingOption', selectedOption);
-    navigate("/draft-response");
+    navigate("/user/draft-response");
   };
 
   const processingOptions = [

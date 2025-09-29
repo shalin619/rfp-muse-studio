@@ -190,12 +190,12 @@ const Output = () => {
       <div className="flex justify-between">
         <Button 
           variant="outline" 
-          onClick={() => navigate("/review")}
+          onClick={() => navigate("/user/review")}
         >
           Back to Review
         </Button>
         <Button 
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/user")}
         >
           Start New RFP
         </Button>
