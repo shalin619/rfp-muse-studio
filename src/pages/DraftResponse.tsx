@@ -25,6 +25,11 @@ const DraftResponse = () => {
   useEffect(() => {
     const option = sessionStorage.getItem('processingOption') || 'auto-draft';
     setProcessingOption(option);
+    
+    // In production, this would fetch RFP instructions and include them in the AI generation
+    // import { getInstructionsForRfpGeneration } from "@/api/rfpInstructions";
+    // const instructions = await getInstructionsForRfpGeneration();
+    // These instructions would be automatically appended to the AI prompt
   }, []);
 
   // Sample content for different processing options

@@ -11,6 +11,7 @@ import DraftResponse from "./pages/DraftResponse";
 import Review from "./pages/Review";
 import Output from "./pages/Output";
 import NotFound from "./pages/NotFound";
+import RfpInstructions from "./pages/admin/RfpInstructions";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainDashboard />} />
+          <Route path="/admin/rfp-instructions" element={<RfpInstructions />} />
           <Route path="/user" element={<UserWorkspace />}>
             <Route path="upload" element={<Upload />} />
             <Route path="processing-options" element={<ProcessingOptions />} />

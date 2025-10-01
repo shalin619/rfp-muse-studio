@@ -160,6 +160,15 @@ const AdminDashboard = () => {
         <h1 className="text-3xl font-semibold text-foreground">Admin Dashboard</h1>
         <div className="flex items-center gap-4">
           <Button 
+            onClick={() => navigate("/admin/rfp-instructions")}
+            variant="default"
+            size="sm"
+            className="flex items-center gap-2"
+          >
+            <FileText className="h-4 w-4" />
+            RFP Instructions
+          </Button>
+          <Button 
             onClick={() => navigate("/")}
             variant="outline"
             size="sm"
