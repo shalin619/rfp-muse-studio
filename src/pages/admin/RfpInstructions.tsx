@@ -28,17 +28,79 @@ const RfpInstructions = () => {
   const { instructions, addInstruction, updateInstruction, deleteInstruction, isLoading } = useInstructions();
 
   const handleVoiceInput = async () => {
-    setIsRecording(true);
-    // Mock voice transcription - in production, this would use actual speech-to-text
-    setTimeout(() => {
-      const mockTranscription = "Emphasize data security and vendor must have BFSI experience with at least 5 years track record.";
-      setNewInstruction((prev) => prev + (prev ? " " : "") + mockTranscription);
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      toast({
+        title: "Not supported",
+        description: "Speech recognition is not supported in your browser.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (isRecording) {
+      // Stop recording
+      setIsRecording(false);
+      return;
+    }
+
+    try {
+      const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+
+      recognition.onstart = () => {
+        setIsRecording(true);
+        toast({
+          title: "Listening...",
+          description: "Speak now. Click the microphone again to stop.",
+        });
+      };
+
+      recognition.onresult = (event: any) => {
+        let interimTranscript = '';
+        let finalTranscript = '';
+
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          const transcript = event.results[i][0].transcript;
+          if (event.results[i].isFinal) {
+            finalTranscript += transcript + ' ';
+          } else {
+            interimTranscript += transcript;
+          }
+        }
+
+        if (finalTranscript) {
+          setNewInstruction((prev) => prev + (prev ? " " : "") + finalTranscript);
+        }
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error('Speech recognition error:', event.error);
+        setIsRecording(false);
+        toast({
+          title: "Error",
+          description: `Speech recognition error: ${event.error}`,
+          variant: "destructive",
+        });
+      };
+
+      recognition.onend = () => {
+        setIsRecording(false);
+      };
+
+      recognition.start();
+    } catch (error) {
+      console.error('Error starting speech recognition:', error);
       setIsRecording(false);
       toast({
-        title: "Voice captured",
-        description: "Your speech has been transcribed.",
+        title: "Error",
+        description: "Failed to start voice input.",
+        variant: "destructive",
       });
-    }, 2000);
+    }
   };
 
   const handleSaveInstruction = async () => {
