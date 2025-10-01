@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mic, Plus, Pencil, Trash2, Check, X, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useInstructions } from "@/hooks/useInstructions";
 import {
   AlertDialog,
@@ -53,10 +54,6 @@ const RfpInstructions = () => {
 
       recognition.onstart = () => {
         setIsRecording(true);
-        toast({
-          title: "Listening...",
-          description: "Speak now. Click the microphone again to stop.",
-        });
       };
 
       recognition.onresult = (event: any) => {
@@ -299,6 +296,32 @@ const RfpInstructions = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Listening Dialog */}
+      <Dialog open={isRecording} onOpenChange={() => setIsRecording(false)}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center justify-center gap-2">
+              <Mic className="h-5 w-5 text-destructive animate-pulse" />
+              Listening...
+            </DialogTitle>
+            <DialogDescription className="text-center pt-4">
+              Speak now. Your voice is being transcribed in real-time.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col items-center justify-center py-8">
+            <div className="relative">
+              <div className="h-24 w-24 rounded-full bg-destructive/20 flex items-center justify-center animate-pulse">
+                <Mic className="h-12 w-12 text-destructive" />
+              </div>
+              <div className="absolute inset-0 h-24 w-24 rounded-full bg-destructive/10 animate-ping" />
+            </div>
+            <p className="mt-6 text-sm text-muted-foreground">
+              Click anywhere outside to stop
+            </p>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={!!deleteId} onOpenChange={() => setDeleteId(null)}>
