@@ -163,10 +163,10 @@ const AdminDashboard = () => {
             onClick={() => navigate("/admin/rfp-instructions")}
             variant="default"
             size="sm"
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 mt-2"
           >
             <FileText className="h-4 w-4" />
-            RFP Instructions
+            Manual RFP Instructions
           </Button>
           <Button 
             onClick={() => navigate("/")}
