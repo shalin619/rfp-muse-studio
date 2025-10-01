@@ -95,7 +95,7 @@ const RfpInstructions = () => {
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-3xl font-bold">RFP Instructions</h1>
           <Button 
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/admin")}
             variant="outline"
             size="sm"
             className="flex items-center gap-2"
