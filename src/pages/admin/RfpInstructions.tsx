@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,6 +27,7 @@ const RfpInstructions = () => {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const { toast } = useToast();
   const { instructions, addInstruction, updateInstruction, deleteInstruction, isLoading } = useInstructions();
+  const recognitionRef = useRef<any>(null);
 
   const handleVoiceInput = async () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
@@ -40,6 +41,9 @@ const RfpInstructions = () => {
 
     if (isRecording) {
       // Stop recording
+      if (recognitionRef.current) {
+        recognitionRef.current.stop();
+      }
       setIsRecording(false);
       return;
     }
@@ -47,6 +51,7 @@ const RfpInstructions = () => {
     try {
       const SpeechRecognition = (window as any).SpeechRecognition || (window as any).webkitSpeechRecognition;
       const recognition = new SpeechRecognition();
+      recognitionRef.current = recognition;
       
       recognition.continuous = true;
       recognition.interimResults = true;
@@ -77,11 +82,15 @@ const RfpInstructions = () => {
       recognition.onerror = (event: any) => {
         console.error('Speech recognition error:', event.error);
         setIsRecording(false);
-        toast({
-          title: "Error",
-          description: `Speech recognition error: ${event.error}`,
-          variant: "destructive",
-        });
+        
+        // Don't show error toast for "aborted" - it's expected when user closes dialog
+        if (event.error !== 'aborted') {
+          toast({
+            title: "Error",
+            description: `Speech recognition error: ${event.error}`,
+            variant: "destructive",
+          });
+        }
       };
 
       recognition.onend = () => {
@@ -298,7 +307,12 @@ const RfpInstructions = () => {
       </Card>
 
       {/* Listening Dialog */}
-      <Dialog open={isRecording} onOpenChange={() => setIsRecording(false)}>
+      <Dialog open={isRecording} onOpenChange={(open) => {
+        if (!open && recognitionRef.current) {
+          recognitionRef.current.stop();
+        }
+        setIsRecording(open);
+      }}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
             <DialogTitle className="flex items-center justify-center gap-2">
